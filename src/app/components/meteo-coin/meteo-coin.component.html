@@ -22,14 +22,14 @@
             </b>
           </div>
 
-          <p>Price: {{ crypto.priceUsd }} $</p>
+          <p>Price: {{ crypto.priceUsd | number : "1.2-2" }} $</p>
           <p>
             Change:
             <span
               [ngStyle]="{
                 color: +crypto.changePercent24Hr < 0 ? 'red' : 'green'
               }"
-              >{{ crypto.changePercent24Hr }}%</span
+              >{{ crypto.changePercent24Hr | number : "1.2-4" }}%</span
             >
           </p>
         </mat-card-content>
