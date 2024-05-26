@@ -1,1 +1,57 @@
-<p>meteo-coin works!</p>
+<div class="page">
+  <div class="crypto-cards">
+    <div *ngFor="let crypto of cryptos" class="crypto-card">
+      <mat-card>
+        <mat-card-content
+          [ngClass]="{ 'doge-highlight': crypto.name === 'Dogecoin' }"
+          [matTooltip]="
+            crypto.name === 'Dogecoin' ? 'La crypto de la maison' : ''
+          "
+        >
+          <div class="card-header">
+            <img
+              [src]="crypto.logoUrl"
+              alt="{{ crypto.name }} Logo"
+              class="crypto-logo"
+            />
+            <p>
+              {{ crypto.name }}
+            </p>
+            <b>
+              {{ crypto.symbol }}
+            </b>
+          </div>
+
+          <p>Price: {{ crypto.priceUsd }} $</p>
+          <p>
+            Change:
+            <span
+              [ngStyle]="{
+                color: +crypto.changePercent24Hr < 0 ? 'red' : 'green'
+              }"
+              >{{ crypto.changePercent24Hr }}%</span
+            >
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="exchange-card">
+    <mat-card *ngIf="bestExchange$ | async as bestExchange">
+      <mat-card-header>
+        <mat-card-title>Meilleur exchange des dernières 24h</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Nom : {{ bestExchange.name }}</p>
+        <p>Rank : {{ bestExchange.rank }}</p>
+        <p>
+          Volume Pourcentage:
+          {{ bestExchange.percentTotalVolume | number : "1.2-4" }} %
+        </p>
+        <p>Volume en USD: {{ bestExchange.volumeUsd | number : "1.2-4" }} $</p>
+
+        <a [href]="bestExchange.exchangeUrl">{{ bestExchange.exchangeUrl }}m</a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

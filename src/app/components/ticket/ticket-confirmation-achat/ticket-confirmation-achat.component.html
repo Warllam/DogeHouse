@@ -1,0 +1,14 @@
+<!-- recap-dialog.component.html -->
+<h1 mat-dialog-title>Récapitulatif de l'Achat</h1>
+<div mat-dialog-content>
+  <p>Nom : {{ data.name }}</p>
+  <p>Nombre de Tickets : {{ data.nbTicket }}</p>
+  <p>Sous Total : {{ data.ssTotal }}</p>
+  <p>Reduction : {{ data.reduction }}</p>
+  <p>Prix total: {{ data.prixTotal }}</p>
+</div>
+
+<img src="https://dogecoin.com/assets/images/doge.webp" />
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Fermer</button>
+</div>

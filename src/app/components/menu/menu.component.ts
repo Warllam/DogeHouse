@@ -1,8 +1,19 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css',
+  selector: "app-menu",
+  templateUrl: "./menu.component.html",
+  styleUrl: "./menu.component.scss",
 })
-export class MenuComponent {}
+export class MenuComponent {
+  constructor(private router: Router) {}
+
+  goToMeteoCoin() {
+    this.router.navigate([""]);
+  }
+
+  goToTickets() {
+    this.router.navigate(["tickets"]);
+  }
+}

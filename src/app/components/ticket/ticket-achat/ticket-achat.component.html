@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-title>Acheter un Ticket de Transport avec DogeCoin</mat-card-title>
+
+  <p class="description">
+    Bienvenue à Paris pour les Jeux Olympiques! Achetez vos tickets de transport
+    en utilisant DogeCoin !
+  </p>
+
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nom</mat-label>
+      <input matInput type="text" formControlName="name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de Tickets</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="quantite"
+        min="0"
+        required
+      />
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="dogeMode"
+      >Payer en Doge Coin</mat-slide-toggle
+    >
+
+    <div>
+      <p>Sous Total: {{ calculateSousTotal() }} {{ getCurrency() }}</p>
+      <p *ngIf="ticketForm.value.quantite >= nbTicketsForDiscount">
+        Remise de {{ discountPercentage }}% appliquée: -{{
+          calculateDiscount()
+        }}
+        {{ getCurrency() }}
+      </p>
+      <p>Prix total: {{ calculateTotalPrice() }} {{ getCurrency() }}</p>
+    </div>
+    <button mat-raised-button color="primary" type="submit">Acheter</button>
+  </form>
+</mat-card>

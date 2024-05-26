@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  padding: 20px;
+}
+
+mat-card {
+  border: 1px solid #000000;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
+  .mat-card-title {
+    color: #e02328;
+    background-color: #ffe600;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+  .logo {
+    height: 50px;
+    width: auto;
+  }
+
+  .description {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 0.9em;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .mat-slide-toggle-bar {
+    background-color: #ccc;
+  }
+
+  .mat-slide-toggle-thumb {
+    background-color: #ffe600;
+  }
+
+  button {
+    background-color: #ffe600;
+    color: #000000;
+    &:hover {
+      background-color: #ffe600;
+    }
+  }
+
+  p {
+    color: #333;
+    font-size: 0.9em;
+  }
+}
