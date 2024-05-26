@@ -8,7 +8,7 @@
   <p>Prix total: {{ data.prixTotal }}</p>
 </div>
 
-<img src="https://dogecoin.com/assets/images/doge.webp" />
+<img *ngIf="data.dogeMode" src="https://dogecoin.com/assets/images/doge.webp" />
 <div mat-dialog-actions>
   <button mat-button (click)="onClose()">Fermer</button>
 </div>
