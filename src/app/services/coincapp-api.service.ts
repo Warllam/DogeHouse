@@ -37,6 +37,7 @@ export interface Exchange {
 export class CoincappApiService {
   private API_URL_COIN = "https://api.coincap.io/v2/assets";
   private API_URL_EXCHANGE = "https://api.coincap.io/v2/exchanges";
+  private API_URL_BACK = "https://localhost/api";
 
   constructor(private http: HttpClient) {}
 
@@ -64,6 +65,16 @@ export class CoincappApiService {
     return this.http.get(url).pipe(
       map((response: any) => {
         return response.data.find((exchange: any) => exchange.rank === "1");
+      })
+    );
+  }
+
+  getPersonnes$(): Observable<any>{
+    const url = `${this.API_URL_BACK}`;
+    return this.http.get(url).pipe(
+      map((response: any) => {
+        console.log(response)
+        return response;
       })
     );
   }

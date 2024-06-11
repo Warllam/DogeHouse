@@ -20,6 +20,7 @@ export class MeteoCoinComponent implements OnInit {
 
   ngOnInit() {
     this.populateCryptos();
+    this.coinAppApi.getPersonnes$();
   }
 
   populateCryptos() {
