@@ -14,6 +14,6 @@ export class MenuComponent {
   }
 
   goToTickets() {
-    this.router.navigate(["tickets"]);
+    this.router.navigate(["ehehehhejtaibieneu"]);
   }
 }
