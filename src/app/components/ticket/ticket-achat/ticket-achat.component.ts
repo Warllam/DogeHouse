@@ -22,7 +22,7 @@ export interface Commande {
 })
 export class TicketAchatComponent implements OnInit {
   ticketForm: FormGroup;
-  discountPercentage: number = 5;
+  discountPercentage: any = 5; 
   nbTicketsForDiscount: number = 2;
   prixTicketEuro: number = 4;
   dogePrice: number = 0;
@@ -33,14 +33,20 @@ export class TicketAchatComponent implements OnInit {
     private dialog: MatDialog,
     private coinAppApi: CoincappApiService
   ) {
-    this.dogePrice$ = this.coinAppApi
-      .getCrypto$("dogecoin")
-      .pipe(map((crypto) => 1 / Number(crypto.priceUsd)));
+    this.dogePrice$ = this.coinAppApi.getCrypto$("dogecoin").pipe(
+      map((crypto: any) => {
+        this.coinAppApi.getCrypto$("bitcoin").subscribe((btc: any) => {
+          console.log("Bitcoin price:", btc.priceUsd); // Nested subscribe
+        });
+        return 1 / Number(crypto.priceUsd);
+      })
+    );
 
     this.dogePrice$.subscribe((price) => (this.dogePrice = price));
+
     this.ticketForm = this.fb.group({
       name: ["", Validators.required],
-      quantite: [1, [Validators.required, Validators.min(1)]],
+      quantite: ["1", [Validators.required, Validators.min(1)]], 
       dogeMode: [false],
     });
   }
@@ -60,12 +66,18 @@ export class TicketAchatComponent implements OnInit {
           dogeMode: formValue.dogeMode,
         },
       });
+
       dialogRef.afterClosed().subscribe(() => this.ticketForm.reset());
+    } else {
+      console.log("Formulaire invalide", this.ticketForm.errors);
     }
   }
 
   calculateSousTotal(): number {
     const quantite = this.ticketForm.value.quantite;
+    if (quantite < 0) {
+      console.error("Quantité négative détectée !");
+    }
     const basePrice = quantite * this.prixTicketEuro;
     return this.ticketForm.value.dogeMode
       ? basePrice * this.dogePrice

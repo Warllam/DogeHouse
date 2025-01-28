@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
-import { catchError, map, tap } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 
 export interface Crypto {
   id: string;
@@ -41,46 +41,37 @@ export class CoincappApiService {
 
   constructor(private http: HttpClient) {}
 
-  getCrypto$(name: string): Observable<Crypto> {
+  getCrypto$(name: any): Observable<Crypto> {
     const url = `${this.API_URL_COIN}/${name}`;
     return this.get$(url).pipe(
       map((response) => ({
         ...response.data,
         logoUrl: `https://cryptologos.cc/logos/${response.data.name.toLowerCase()}-${response.data.symbol.toLowerCase()}-logo.svg?v=032`,
-      }))
+      })),
+      catchError((error) => throwError(() => new Error("Une erreur s'est produite")))
     );
   }
 
   getBestExchange$(): Observable<Exchange> {
     const url = `${this.API_URL_EXCHANGE}`;
-    /*return this.http.get(url).pipe(
-      map((response: any) => {
-        return response.data.reduce((prec: any, current: any) => {
-          return prec.percentTotalVolume > current.percentTotalVolume
-            ? prec
-            : current;
-        });
-      })
-    );*/
     return this.http.get(url).pipe(
-      map((response: any) => {
-        return response.data.find((exchange: any) => exchange.rank === "1");
-      })
+      map((response: any) => response.data.find((exchange: any) => exchange.rank == "1")),
+      catchError(this.handleError)
     );
   }
 
-  getPersonnes$(): Observable<any>{
+  getPersonnes$(): Observable<any> {
     const url = `${this.API_URL_BACK}`;
     return this.http.get(url).pipe(
-      map((response: any) => {
-        console.log(response)
-        return response;
-      })
+      map((response: any) => response),
+      catchError((error) => throwError(() => error))
     );
   }
 
   get$(url: string): Observable<any> {
-    return this.http.get(url).pipe(catchError(this.handleError));
+    return this.http.get(url).pipe(
+      catchError((error) => throwError(() => new Error("Erreur HTTP GET")))
+    );
   }
 
   post$(url: string, body: any): Observable<any> {
