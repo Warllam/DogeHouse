@@ -1,3 +1,3 @@
 # DogeHouse
 
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/Warllam/DogeHouse)
+A small coin price tracker built in around 1 hour as a coding interview exercise.
